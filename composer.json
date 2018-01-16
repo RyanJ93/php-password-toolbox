@@ -1,0 +1,32 @@
+{
+	"name": "ryanj93/php-password-toolbox",
+	"description": "A simple toolkit for generate, analyse and hash passwords with PHP.",
+	"type": "library",
+	"license": "GPLv3",
+	"homepage": "https://github.com/RyanJ93/php-password-toolbox#readme",
+	"authors": [{
+		"name": "Enrico Sola",
+		"email": "sola.enrico.93@gmail.com",
+		"homepage": "https://www.enricosola.com"
+	}],
+	"require": {
+        "php": ">=7.0"
+    },
+    "keywords": [
+		"password",
+		"generator",
+		"random",
+		"crypt",
+		"encryption",
+		"hash",
+		"hashing",
+		"validator",
+		"utilities",
+		"security"
+	],
+	"autoload": {
+        "files": [
+	        "php-password-toolbox.php"
+	    ]
+    }
+}
