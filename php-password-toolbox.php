@@ -168,6 +168,25 @@ namespace PHPPasswordToolBox{
 		}
 		
 		/**
+		* Loads the content of the dictionary that has been set.
+		*
+		* @return bool If some data is loaded from the file will be returned "true", otherwise "false".
+		*
+		* @throws Exception If an error occurs while reading dictionary contents.
+		*/
+		public function loadDictionaryCache(): bool{
+			if ( $this->cache === false || $this->dictionary === NULL ){
+				return false;
+			}
+			$data = @file_get_contents(dirname(__FILE__) . '/' . $this->dictionary);
+			if ( $data === false ){
+				throw new \Exception('Unable to load the dictionary.');
+			}
+			$this->wordlist = $data;
+			return true;
+		}
+		
+		/**
 		* Sets if the passwords shall be analyzed in case-insensitive way or not, this method is chainable.
 		*
 		* @param bool $value If set to "true" the passwords will be analyzed in case-insensitive way, otherwise not.
@@ -341,7 +360,9 @@ namespace PHPPasswordToolBox{
 				$dictionaryEncoding = mb_internal_encoding();
 			}
 			if ( $this->cache === true && $this->wordlist !== NULL && $this->wordlist !== '' ){
-				if ( mb_strpos($this->wordlist, $password . "\n", $dictionaryEncoding) !== false ){
+				if ( mb_strpos($this->wordlist, "\n") === false && $this->wordlist === $password ){
+					$analysis['score'] -= $analysis['score'] > 50 ? 25 : 10;
+				}elseif ( mb_strpos($this->wordlist, $password . "\n", $dictionaryEncoding) !== false || mb_strpos($this->wordlist, "\n" . $password, $dictionaryEncoding) !== false ){
 					$analysis['score'] -= $analysis['score'] > 50 ? 25 : 10;
 				}
 				$analysis['score'] = $analysis['score'] > 100 ? 100 : ( $analysis['score'] < 0 ? 0 : $analysis['score'] );
@@ -350,13 +371,15 @@ namespace PHPPasswordToolBox{
 			}elseif ( $this->cache === true && ( $this->wordlist !== NULL || $this->wordlist !== '' ) ){
 				$data = file_get_contents(dirname(__FILE__) . '/' . $dictionary);
 				if ( $data === false ){
-					throw new Exception('Dictionary file was not found.');
+					throw new \Exception('Dictionary file was not found.');
 				}
 				if ( $data === '' ){
 					return $analysis;
 				}
 				$this->wordlist = $data;
-				if ( mb_strpos($data, $password . "\n", 0, $dictionaryEncoding) !== false ){
+				if ( mb_strpos($data, "\n") === false && $data === $password ){
+					$analysis['score'] -= $analysis['score'] > 50 ? 25 : 10;
+				}elseif ( mb_strpos($data, $password . "\n", 0, $dictionaryEncoding) !== false ){
 					$analysis['score'] -= $analysis['score'] > 50 ? 25 : 10;
 				}
 				$analysis['score'] = $analysis['score'] > 100 ? 100 : ( $analysis['score'] < 0 ? 0 : $analysis['score'] );
@@ -462,6 +485,25 @@ namespace PHPPasswordToolBox{
 		public function invalidateDictionaryCache(): Generator{
 			$this->wordlist = null;
 			return $this;
+		}
+		
+		/**
+		* Loads the content of the dictionary that has been set.
+		*
+		* @return bool If some data is loaded from the file will be returned "true", otherwise "false".
+		*
+		* @throws Exception If an error occurs while reading dictionary contents.
+		*/
+		public function loadDictionaryCache(): bool{
+			if ( $this->cache === false || $this->dictionary === NULL ){
+				return false;
+			}
+			$data = @file_get_contents(dirname(__FILE__) . '/' . $this->dictionary);
+			if ( $data === false ){
+				throw new \Exception('Unable to load the dictionary.');
+			}
+			$this->wordlist = $data;
+			return true;
 		}
 		
 		/**
