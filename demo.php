@@ -7,7 +7,7 @@ $password = $generator->generate(12);
 echo 'Random password: ' . $password . PHP_EOL;
 
 //Generating a human readable password.
-$psw = $generator->setDictionaryPath('dictionary.txt')->generateHumanReadable(12, 2);
+$psw = $generator->setDictionaryPath(dirname(__FILE__) . '/dictionary.txt')->generateHumanReadable(12, 2);
 echo 'Human readable password: ' . $psw . PHP_EOL;
 
 //Analyzing password.
@@ -16,7 +16,7 @@ $analysis = $analyzer->analyze($password);
 var_dump($analysis);
 
 //Complete password analysis.
-$analysis = $analyzer->setDictionaryPath('rockyou.txt')->completeAnalysis($password);
+$analysis = $analyzer->setDictionaryPath(dirname(__FILE__) . '/rockyou.txt')->completeAnalysis($password);
 var_dump($analysis);
 
 //Creating a hash from the password.

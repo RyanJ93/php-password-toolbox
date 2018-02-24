@@ -63,7 +63,7 @@ namespace PHPPasswordToolBox{
 				$start = 0;
 			}
 			$length = $chunkSize + self::MAX_SIZE_CHARACTER;
-			$data = @file_get_contents(dirname(__FILE__) . '/' . $path, false, NULL, $start, $length);
+			$data = @file_get_contents($path, false, NULL, $start, $length);
 			if ( $data === false ){
 				throw new \Exception('Unable to read from the given file.');
 			}
@@ -178,7 +178,7 @@ namespace PHPPasswordToolBox{
 			if ( $this->cache === false || $this->dictionary === NULL ){
 				return false;
 			}
-			$data = @file_get_contents(dirname(__FILE__) . '/' . $this->dictionary);
+			$data = @file_get_contents($this->dictionary);
 			if ( $data === false ){
 				throw new \Exception('Unable to load the dictionary.');
 			}
@@ -256,8 +256,8 @@ namespace PHPPasswordToolBox{
 		/**
 		* Analyzes a given password.
 		*
-		* @param string password The password to analyze.
-		* @param array keywords An optional sequeantial array of strings containing some keywords which shall be looked into the given password (like first name, surname, e-mail address and so on).
+		* @param string $password The password to analyze.
+		* @param array $keywords An optional sequeantial array of strings containing some keywords which shall be looked into the given password (like first name, surname, e-mail address and so on).
 		*
 		* @return array An associative array containing the information of the analysis, like chars counts, keywords counts and strength score.
 		*/
@@ -341,8 +341,8 @@ namespace PHPPasswordToolBox{
 		/**
 		* Analyzes a given password using also a dictionary of weak passwords to test its strength.
 		*
-		* @param string password The password to analyze.
-		* @param array info A sequential array of strings containing some additional information which shall be looked into the given password (like first name, surname, e-mail address and so on).
+		* @param string $password The password to analyze.
+		* @param array $info A sequential array of strings containing some additional information which shall be looked into the given password (like first name, surname, e-mail address and so on).
 		*
 		* @return array An associative array containing the information of the analysis, like chars counts, keywords counts and strength score.
 		*/
@@ -369,7 +369,7 @@ namespace PHPPasswordToolBox{
 				$analysis['score'] = (int)$analysis['score'];
 				return $analysis;
 			}elseif ( $this->cache === true && ( $this->wordlist !== NULL || $this->wordlist !== '' ) ){
-				$data = file_get_contents(dirname(__FILE__) . '/' . $dictionary);
+				$data = @file_get_contents($dictionary);
 				if ( $data === false ){
 					throw new \Exception('Dictionary file was not found.');
 				}
@@ -498,7 +498,7 @@ namespace PHPPasswordToolBox{
 			if ( $this->cache === false || $this->dictionary === NULL ){
 				return false;
 			}
-			$data = @file_get_contents(dirname(__FILE__) . '/' . $this->dictionary);
+			$data = @file_get_contents($this->dictionary);
 			if ( $data === false ){
 				throw new \Exception('Unable to load the dictionary.');
 			}
@@ -640,7 +640,7 @@ namespace PHPPasswordToolBox{
 				}
 				return Hash::generateRandomNumber(0, 1) === 1 ? $password . $number : $number . $password;
 			}
-			$data = file_get_contents(dirname(__FILE__) . '/' . $dictionary);
+			$data = @file_get_contents($dictionary);
 			if ( $data === false ){
 				throw new \Exception('Unable to read data from dictionary file.');
 			}
@@ -924,8 +924,8 @@ namespace PHPPasswordToolBox{
 		/**
 		* Checks if a given password corresponds with the given hash as associative array.
 		*
-		* @param string password A string containing the password.
-		* @param array hash An associative array containing the password hash and the respective parameters.
+		* @param string $password A string containing the password.
+		* @param array $hash An associative array containing the password hash and the respective parameters.
 		*
 		* @return bool If the given password corresponds will be returned "true", otherwise "false".
 		*
