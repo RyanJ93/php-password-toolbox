@@ -2,7 +2,7 @@
 /**
 * A simple toolkit for generate, analyse and hash passwords with PHP.
 *
-* @package     php-tor-detector
+* @package     php-password-toolbox
 * @author      Enrico Sola <info@enricosola.com>
 * @version     v.1.1.4
 */
