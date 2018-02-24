@@ -1,4 +1,12 @@
 <?php
+/**
+* A simple toolkit for generate, analyse and hash passwords with PHP.
+*
+* @package     php-tor-detector
+* @author      Enrico Sola <info@enricosola.com>
+* @version     v.1.1.4
+*/
+
 namespace PHPPasswordToolBox{
 	class Utils{
 		/**
